@@ -23,15 +23,22 @@ const Signin = () => {
 
 const handleSubmit = async (e) => {
  e.preventDefault();
- await axios.post(`${window.location.origin}/api/v1/signin`, formData).then((response)=>{
- toast.success("Logged In Successfully");
-  sessionStorage.setItem("id", response.data.others._id);
-  dispatch(authActions.login());
+ try {
+  const response =  await axios.post(`${window.location.origin}/api/v1/signin`, formData);
+  console.log(response.data);
+  if (response.data) {
+    sessionStorage.setItem("id", response.data.user._id);
+    dispatch(authActions.login());
+    history("/todo");
+    toast.success("Logged In")
+  } else {
+    toast.error("User Not Found");
 
-
-  history("/todo");
- 
- });  };
+  }
+ } catch (error) {
+  console.error("An Error Accured :",error);
+ }
+};
   return (
 
     <div className="flex items-center justify-center min-h-screen pt-16  bg-gray-100">
