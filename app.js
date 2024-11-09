@@ -43,18 +43,21 @@ const app = express();
 // });
 app.use(express.json());
 app.use(cors());
+
+
+
 const port = process.env.PORT
-
-
 connectDB();
+app.use(express.static(path.resolve(__dirname,"frontend","dist")));
+app.get("/",(req , res)=>{
+    res.sendFile(path.resolve(__dirname,"frontend","dist","index.html"));
+});
+
 
 app.use("/api/v1" , auth);
 app.use("/api/v2", list)
 
-app.get("/",(req , res)=>{
-    app.use(express.static(path.resolve(__dirname,"frontend","dist")));
-    res.sendFile(path.resolve(__dirname,"frontend","dist","index.html"));
-});
+
 app.listen(port || 3000,()=>{
     console.log("App Listen on Port :" , port);
 });
