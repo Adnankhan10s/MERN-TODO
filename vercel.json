@@ -16,6 +16,10 @@
         "dest": "app.js"
       },
       {
+        "src": "/static/(.*)",
+        "dest": "/frontend/dist/$1"
+      },
+      {
         "src":"/(.*)",
         "dest":"/frontend/dist/index.html"
       }
