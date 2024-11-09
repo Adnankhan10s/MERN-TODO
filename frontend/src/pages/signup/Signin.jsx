@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import { authActions } from '../../store';
+import { response } from 'express';
 const Signin = () => {
   const dispatch = useDispatch();
   
@@ -25,9 +26,9 @@ const handleSubmit = async (e) => {
  e.preventDefault();
  try {
   const response =  await axios.post(`${window.location.origin}/api/v1/signin`, formData);
-  console.log(response.data);
-  if (response.data) {
-    sessionStorage.setItem("id", response.data.user._id);
+  console.log(response.data)
+  if (response.data && response.data.others) {
+    sessionStorage.setItem("id",response.data.others._id);
     dispatch(authActions.login());
     history("/todo");
     toast.success("Logged In")
@@ -36,7 +37,8 @@ const handleSubmit = async (e) => {
 
   }
  } catch (error) {
-  console.error("An Error Accured :",error);
+  console.log(error);
+  toast.error("Login Failed");
  }
 };
   return (

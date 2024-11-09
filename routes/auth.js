@@ -82,13 +82,13 @@ router.post("/signin", async (req, res)=>{
             user.password
         );
         if(!isPasswordCorrect){
-            res.status(201).json({message:"Invalid Password Credential"})
+            res.status(401).json({message:"Invalid Password Credential"})
         }
         const {password , ...others}=user._doc;
         res.status(200).json({others});
     }
    catch (error) {
-    res.status(200).json({message:"Invalid Credentials"});
+    res.status(500).json({message:"Invalid Credentials"});
     }
 });
 
