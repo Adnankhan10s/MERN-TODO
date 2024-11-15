@@ -13,8 +13,3 @@ export default defineConfig({
     'process.env': process.env, // Inject environment variables
   },
 })
-export default {
-  build: {
-    outDir: 'dist',
-  },
-};
